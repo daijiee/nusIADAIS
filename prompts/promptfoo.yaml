@@ -1,5 +1,6 @@
 prompts:
   - Tell me more about start-up tax exemption
+  - Add a test trigger prompt   # optional dummy prompt to trigger workflow
 
 providers:
   - openai:gpt-3.5-turbo  # or ollama:gemma:2b
@@ -11,4 +12,4 @@ tests:
       - type: contains
         value: period of time
       - type: javascript
-        value: output.length < 2000  # Keep it short and sweet
+        value: output.length < 1000  # Keep it short and sweet
