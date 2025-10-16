@@ -1,15 +1,19 @@
-prompts:
-  - Tell me more about start-up tax exemption
-  - Add a test trigger prompt   # optional dummy prompt to trigger workflow
+name: 'Prompt Evaluation'
 
-providers:
-  - openai:gpt-3.5-turbo  # or ollama:gemma:2b
+on:
+  pull_request:
+    paths:
+      - 'prompts/**'  # Trigger the action when files in the 'prompts' folder are modified
 
-tests:
-  - vars:
-      topic: entrepreneur
-    assert:
-      - type: contains
-        value: period of time
-      - type: javascript
-        value: output.length < 1000  # Keep it short and sweet
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write  # Required to post comments on Pull Requests
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: promptfoo/promptfoo-action@v1
+        with:
+          config: 'prompts/promptfoo.yaml'  # Path to your PromptFoo config
