@@ -1,0 +1,14 @@
+prompts:
+  - Tell me more about start-up tax exemption
+
+providers:
+  - openai:gpt-3.5-turbo  # or ollama:gemma:2b
+
+tests:
+  - vars:
+      topic: entrepreneur
+    assert:
+      - type: contains
+        value: period of time
+      - type: javascript
+        value: output.length < 2000  # Keep it short and sweet

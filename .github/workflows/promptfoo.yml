@@ -1,0 +1,23 @@
+name: 'Prompt Evaluation'
+
+on:
+  pull_request:
+    paths:
+      - 'prompts/**'
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - run: npm install -g promptfoo
+
+      - run: promptfoo test --config prompts/promptfoo.yaml
