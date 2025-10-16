@@ -1,8 +1,9 @@
 prompts:
   - Tell me more about start-up tax exemption
+  - Add a test trigger prompt   # optional dummy prompt to trigger workflow
 
 providers:
-  - openai:gpt-3.5-turbo  # or ollama:gemma:2b
+  - ollama:gemma:2b  # or ollama:gemma:2b
 
 tests:
   - vars:
