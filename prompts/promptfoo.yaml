@@ -1,19 +1,23 @@
-name: 'Prompt Evaluation'
+prompts:
+  - |
+    System: You are a friendly customer service agent named IRAS Bot.
+    User: {{customer_message}}
+    Assistant: Let me help you with that!
 
-on:
-  pull_request:
-    paths:
-      - 'prompts/**'  # Trigger the action when files in the 'prompts' folder are modified
-
-jobs:
-  evaluate:
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write  # Required to post comments on Pull Requests
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: promptfoo/promptfoo-action@v1
-        with:
-          config: 'prompts/promptfoo.yaml'  # Path to your PromptFoo config
+tests:
+  - vars:
+      customer_message: "I would like to find out!"
+    assert:
+      - type: contains
+        value: understand your frustration
+      - type: sentiment
+        value: positive
+      - type: custom-js
+        value: |
+          // Check if response is empathetic
+          return {
+            pass: output.toLowerCase().includes('sorry') || 
+                  output.toLowerCase().includes('understand'),
+            score: 1.0,
+            reason: 'Response shows empathy'
+          }
