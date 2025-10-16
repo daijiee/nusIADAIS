@@ -14,7 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: promptfoo/promptfoo-action@v1
+      - uses: actions/setup-node@v3
         with:
-          config: 'prompts/promptfoo.yaml'  # Path to your PromptFoo test config
+          node-version: '20'
+
+      - run: npm install -g promptfoo
+
+      - run: promptfoo test --config prompts/promptfoo.yaml
+
 
